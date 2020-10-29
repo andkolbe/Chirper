@@ -1,14 +1,23 @@
 import React from 'react';
 
-// 1:04.52
-
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             name: '',
             message: '',
-            chirps: [], // .map()
+            chirps: [
+                {
+                    id: 1,
+                    pet: 'Winnie',
+                    sound: 'Meow!'
+                },
+                {
+                    id: 2,
+                    pet: 'Odin',
+                    sound: 'Woof!'
+                },
+            ],
             homePage: true
         }
     }
@@ -17,12 +26,11 @@ class App extends React.Component {
 
     handleNameChange = e => this.setState({ name: e.target.value })
 
-    handleMessageChange = e => this.setState({ message: e.target.value })
+    handleMessageChange = e => this.setState({ message: e.target.value }) 
 
     handleChirpSubmit = e => {
         e.preventDefault();
-        console.log(this.state.message);
-        this.setState({ homePage: true })
+        this.setState({ homePage: true, name: '', message: '',  })
     }
 
     render() {
@@ -30,26 +38,19 @@ class App extends React.Component {
             return (
                 <main className="container">
                     <section className="row my-2 justify-content-center">
-                        <div className="col-8">
-                            <div className="jumbotron shadow">
-                                <h1 className="display-4">Winnie</h1> {this.state.name}
-                                <p className="lead">Meow!</p>  {this.state.message}
+                        {this.state.chirps.map(chirp => {
+                            return (
+                                <div className="col-8">
+                                <div className="jumbotron shadow">
+                                <h1 className="display-4">{chirp.pet}</h1> 
+                                <p className="lead">{chirp.sound}</p>  
                                 <div className="d-flex">
                                     <button onClick={this.handleNewChirp} className="btn btn-success btn-lg ml-auto" href="#" role="button">New Chirp</button>
                                 </div>
                             </div>
                         </div>
-                    </section>
-                    <section className="row my-2 justify-content-center">
-                        <div className="col-8">
-                            <div className="jumbotron shadow">
-                                <h1 className="display-4">Odin</h1> 
-                                <p className="lead">Woof!</p>  
-                                <div className="d-flex">
-                                    <button onClick={this.handleNewChirp} className="btn btn-success btn-lg ml-auto" href="#" role="button">New Chirp</button>
-                                </div>
-                            </div>
-                        </div>
+                            );
+                        })}
                     </section>
                 </main>
             );
@@ -73,9 +74,9 @@ class App extends React.Component {
     }
 }
 
-
-
-
-
-
 export default App;
+
+
+
+// .map() doesn't mutate
+// smashing jumbotrons together as an array doesn't matter. you can style it 
